@@ -1,13 +1,14 @@
 // Static site build for the Eco Horizon concept.
 // Each page in src/pages is wrapped in src/partials/layout.html.
-// Usage: node build.mjs   ->  writes the finished site to ./dist
+// Usage: node build.mjs   ->  writes the finished site to the repo root,
+// so GitHub Pages (or any static host) serves it with no extra settings.
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const src = join(root, 'src');
-const out = join(root, 'dist');
+const out = root;
 
 const partial = (name) => readFileSync(join(src, 'partials', `${name}.html`), 'utf8');
 
@@ -29,12 +30,13 @@ const parseMeta = (html) => {
   return { meta, body: html.slice(m[0].length) };
 };
 
-if (existsSync(out)) rmSync(out, { recursive: true });
-mkdirSync(out, { recursive: true });
-cpSync(join(src, 'assets'), join(out, 'assets'), { recursive: true });
-
 const layout = partial('layout');
 const pages = readdirSync(join(src, 'pages')).filter((f) => f.endsWith('.html'));
+
+// Only the built assets folder and built pages are replaced; source files stay put.
+if (existsSync(join(out, 'assets'))) rmSync(join(out, 'assets'), { recursive: true });
+mkdirSync(out, { recursive: true });
+cpSync(join(src, 'assets'), join(out, 'assets'), { recursive: true });
 
 for (const file of pages) {
   const { meta, body } = parseMeta(readFileSync(join(src, 'pages', file), 'utf8'));

@@ -20,8 +20,8 @@ A multi-page concept redesign of [ecohorizon.ie](https://ecohorizon.ie) by Code 
 
 ```bash
 cd eco-horizon
-node build.mjs            # builds src/ into dist/
-cd dist && python3 -m http.server 8080
+node build.mjs            # builds src/ into the repo root
+python3 -m http.server 8080
 ```
 
 - `src/pages/*.html`: page content. The comment block at the top sets the title, description and extra scripts.
@@ -29,7 +29,7 @@ cd dist && python3 -m http.server 8080
 - `src/assets/css/main.css`: the whole design system (tokens at the top).
 - `src/assets/js/main.js`: navigation, motion, calculators and checkers. `flow.js` runs the energy simulator and `quote.js` the funnel.
 
-`dist/` is committed so it can be deployed as-is (Netlify, Vercel, Cloudflare Pages, or any static host).
+The built pages (`*.html` and `assets/`) live at the repo root, so GitHub Pages serves the site directly at [ecohorizon.codebunny.net](https://ecohorizon.codebunny.net). Edit files in `src/`, run `node build.mjs`, and commit both. `.nojekyll` tells Pages to serve the files as they are.
 
 ## Before it goes live
 
