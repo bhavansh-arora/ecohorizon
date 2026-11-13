@@ -26,7 +26,7 @@ python3 -m http.server 8080
 
 - `src/pages/*.html`: page content. The comment block at the top sets the title, description and extra scripts.
 - `src/partials/*.html`: shared pieces (header and footer in `layout.html`, calculator, flow simulator, reviews, CTA). Include one with `{{> name}}`.
-- `src/assets/css/main.css`: the whole design system (tokens at the top).
+- `src/assets/css/main.css`: the whole design system. The site is light by default; the tokens at the top set the light palette, and the dark-scope block right after them re-sets the same tokens for photo heroes, the energy simulator, the CTA and `section--deep` bands. Add `theme-dark` to any element to give it the dark look.
 - `src/assets/js/main.js`: navigation, motion, calculators and checkers. `flow.js` runs the energy simulator and `quote.js` the funnel.
 
 The built pages (`*.html` and `assets/`) live at the repo root, so GitHub Pages serves the site directly at [ecohorizon.codebunny.net](https://ecohorizon.codebunny.net). Edit files in `src/`, run `node build.mjs`, and commit both. `.nojekyll` tells Pages to serve the files as they are.
