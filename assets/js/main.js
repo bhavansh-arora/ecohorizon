@@ -117,8 +117,28 @@
   };
   $$('[data-split]').forEach(splitWords);
 
+  /* ---------- Split the footer wordmark into letters ---------- */
+  $$('[data-letters]').forEach((root) => {
+    let i = 0;
+    const walk = (node) => {
+      Array.from(node.childNodes).forEach((child) => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          Array.from(child.textContent).forEach((ch) => {
+            if (/\s/.test(ch)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const c = document.createElement('span');
+            c.className = 'ch'; c.textContent = ch; c.style.setProperty('--i', i++);
+            frag.appendChild(c);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1) walk(child);
+      });
+    };
+    walk(root);
+  });
+
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('[data-reveal], [data-split], .sec-head');
+  const revealEls = $$('[data-reveal], [data-split], .sec-head, .footer-horizon, [data-letters]');
   if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
