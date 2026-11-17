@@ -161,7 +161,7 @@
   const heroes = $$('.hero, .page-hero');
   const playHero = () => heroes.forEach((h) => h.classList.add('is-ready'));
   if (document.fonts && document.fonts.ready) {
-    Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 900))]).then(() => requestAnimationFrame(playHero));
+    Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 150))]).then(() => requestAnimationFrame(playHero));
   } else setTimeout(playHero, 200);
 
   /* ---------- Scroll-driven effects (statement words + parallax) ---------- */
@@ -185,6 +185,11 @@
     return { el, words };
   });
   const parallax = $$('[data-parallax]').map((el) => ({ el, speed: parseFloat(el.dataset.parallax) || 0.12 }));
+  const stackCards = $$('.stack__card');
+  const heroEl = $('.hero');
+  const heroInner = heroEl && $('.hero__inner', heroEl);
+  const heroMedia = heroEl && $('.hero__media', heroEl);
+  const wideQuery = window.matchMedia('(min-width: 861px)');
 
   let ticking = false;
   const onScrollFx = () => {
@@ -204,6 +209,28 @@
         const offset = clamp((r.top + r.height / 2 - vh / 2) * speed * -1, -max, max);
         el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(${1 + speed})`;
       });
+
+      // Process cards: each one recedes as the next slides over it (only while they are sticky)
+      if (wideQuery.matches) {
+        stackCards.forEach((card, i) => {
+          const next = stackCards[i + 1];
+          if (!next) return;
+          const stickTop = parseFloat(getComputedStyle(card).top) || 0;
+          const gap = next.getBoundingClientRect().top - stickTop;
+          const p = clamp(1 - gap / card.offsetHeight, 0, 1);
+          card.style.transform = `scale(${(1 - p * 0.05).toFixed(4)})`;
+          card.style.setProperty('--recede', p.toFixed(3));
+        });
+      } else stackCards.forEach((card) => { card.style.transform = ''; card.style.setProperty('--recede', 0); });
+
+      // Hero: the panel settles back and the copy drifts up as you scroll away
+      if (heroEl) {
+        const h = heroEl.offsetHeight;
+        const p = clamp(window.scrollY / h, 0, 1);
+        heroEl.style.transform = p > 0 ? `scale(${(1 - p * 0.04).toFixed(4)})` : '';
+        if (heroInner) { heroInner.style.transform = p > 0 ? `translate3d(0, ${(-p * 60).toFixed(1)}px, 0)` : ''; heroInner.style.opacity = (1 - p * 0.7).toFixed(3); }
+        if (heroMedia) heroMedia.style.transform = p > 0 ? `translate3d(0, ${(p * 90).toFixed(1)}px, 0)` : '';
+      }
     }
   };
   const requestFx = () => { if (!ticking) { ticking = true; requestAnimationFrame(onScrollFx); } };
