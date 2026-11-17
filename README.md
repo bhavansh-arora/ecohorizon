@@ -34,7 +34,7 @@ The built pages (`*.html` and `assets/`) live at the repo root, so GitHub Pages 
 ## Before it goes live
 
 1. **Connect the quote form.** Set `data-endpoint` on the `<form data-funnel>` in `src/pages/quote.html` to a URL that accepts a JSON POST (CRM webhook, Zapier/Make, or a small serverless function). Until then the form shows the thank-you screen without sending anything.
-2. **Remove the preview notes.** Delete `assets/js/preview-notes.js`, its `<script>` tag in `layout.html` and the `data-note*` attributes. Unpublish or remove `preview-pack.html`.
+2. **Unpublish the preview pack.** Remove `preview-pack.html` (and the "Concept by Code Bunny" footer link in `layout.html`) once the pitch is done.
 3. **Add real project details.** Project cards show category only. Add kWp, county and year for each install.
 4. **Re-check grant figures.** Calculators follow the rules on ecohorizon.ie as of November 2026 (SEAI residential, enhanced Non-Domestic Microgen 7 Oct 2026 – 6 Jul 2027, TAMS 3). Tariff and cost assumptions are at the top of the calculator code in `main.js`.
 5. **Redirect old URLs** (e.g. `/solar-power-services/residential-solar/` → `/homes.html`) to keep search rankings.

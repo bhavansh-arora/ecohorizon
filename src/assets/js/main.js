@@ -118,7 +118,7 @@
   $$('[data-split]').forEach(splitWords);
 
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('[data-reveal], [data-split]');
+  const revealEls = $$('[data-reveal], [data-split], .sec-head');
   if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {

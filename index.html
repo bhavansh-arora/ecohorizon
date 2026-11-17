@@ -169,7 +169,7 @@
     <div class="hero__row">
       <p class="lead hero__lead" data-hero style="--d:.55s">Cutting bills, harnessing the sun and shaping a cleaner tomorrow. Custom-designed solar, battery storage and EV charging, installed by our own certified crew and backed by a 30-year warranty.</p>
 
-      <div class="starter" data-starter data-hero style="--d:.7s" data-note-title="The quote path starts in the hero" data-note="Visitors choose Home, Business or Farm before anything else, and each choice opens a short quote path built for that customer. A farmer never sees a homeowner's form. Today the enquiry form sits under Services › Solar Enquiry Form, with one dropdown for all three.">
+      <div class="starter" data-starter data-hero style="--d:.7s">
         <div class="starter__q"><span>What are we powering?</span><b data-starter-label>Your home</b></div>
         <div class="starter__opts" role="group" aria-label="Choose what you want to power">
           <button class="starter__opt is-active" type="button" data-type="home" data-label="Your home" aria-pressed="true"><svg><use href="#i-home"/></svg><b>Home</b><small>Up to €2,400 in grants</small></button>
@@ -189,7 +189,7 @@
       <div class="hero__stat"><small>Reputation</small><b><span class="stars">★★★★★</span> 5/5 · 67 reviews</b></div>
       <div class="hero__stat"><small>Warranty</small><b>30-year product &amp; performance</b></div>
       <div class="hero__stat"><small>Experience</small><b>Installing since 2015</b></div>
-      <div class="hero__stat" data-sun-live data-note-title="A live solar clock" data-note="This works out the real sun angle over Mountrath every minute, and what a 6 kWp roof would be generating right now. It's a small detail that shows the site is live, not a template, and it gets people talking." data-note-pos="tl"><small><span class="chip__dot" style="width:6px;height:6px;border-radius:50%;background:var(--leaf);box-shadow:0 0 10px var(--leaf)"></span><span data-sun-head>Live · Mountrath</span></small><b data-sun-body>Calculating sunlight…</b></div>
+      <div class="hero__stat" data-sun-live><small><span class="chip__dot" style="width:6px;height:6px;border-radius:50%;background:var(--leaf);box-shadow:0 0 10px var(--leaf)"></span><span data-sun-head>Live · Mountrath</span></small><b data-sun-body>Calculating sunlight…</b></div>
     </div>
   </div>
 </section>
@@ -228,7 +228,7 @@
       <p class="sec-head__note" data-reveal>Homes, businesses and farms have different roofs, budgets and grant schemes. Pick yours and we'll show you exactly what applies.</p>
       <span class="sec-num" aria-hidden="true">02</span>
     </div>
-    <div class="sectors" data-reveal data-note-title="Three customers, one front door" data-note="Residential, commercial and agri buyers want different things. Each panel speaks to one of them, with the grant that applies to them up front, and leads into a page and a quote path built for them.">
+    <div class="sectors" data-reveal>
       <a class="sector is-active" href="homes.html">
         <img class="sector__img" src="assets/img/eh-residential-02.webp" alt="Stone two-storey home with solar panels installed by Eco Horizon" loading="lazy">
         <div class="sector__top"><span class="sector__num">01 / Homes</span><span class="chip chip--sun">SEAI €1,800 + €600</span></div>
@@ -279,7 +279,7 @@
       <span class="sec-num" aria-hidden="true">03</span>
     </div>
 
-        <div class="calc" data-calc data-reveal data-note-title="Grant and savings calculator" data-note="Built on the actual SEAI residential, SEAI Non-Domestic Microgen and TAMS 3 rules from your Grants page. Visitors get a figure before giving any contact details. Then 'Get my exact figures' carries their system size straight into the quote form, so they never retype it.">
+        <div class="calc" data-calc data-reveal>
       <div class="calc__controls">
         <div>
           <p class="field-label">What are we powering?</p>
@@ -333,7 +333,7 @@
       <p class="sec-head__note" data-reveal>Panels, inverter, battery and EV charger working as one. Press play or drag the clock to see where every kilowatt goes.</p>
       <span class="sec-num" aria-hidden="true">04</span>
     </div>
-    <div data-note-title="Batteries and EV chargers, explained by showing" data-note="Most people don't know why they'd want a battery. Playing through one day shows it: sunshine gets stored at noon and runs the house at 8pm. It makes the case for the battery and EV upgrade without a sales pitch, and it works on a phone.">
+    <div>
       <div class="flow" data-flow data-reveal="scale">
   <div class="flow__stage">
     <svg class="flow__svg" viewBox="0 0 640 490" role="img" aria-labelledby="flow-title">
@@ -614,7 +614,7 @@
         <h2 class="d-2 mt-m" id="faq-title" data-split>Straight <em>answers.</em></h2>
         <p class="lead mt-m" data-reveal>Still wondering? Ring us on <a href="tel:+353578756595" style="text-decoration:underline">(057) 875 6595</a>. You'll talk to the people who design and install your system.</p>
       </div>
-      <div class="faq" data-reveal data-note-title="Answers people need before they enquire" data-note="These are the questions that otherwise hold up a decision or turn into phone calls. Answering them on the page removes doubt before the quote form, and the FAQ markup helps the page show up in Google for these exact questions.">
+      <div class="faq" data-reveal>
         <details open>
           <summary>Does solar actually work on cloudy Irish days?<i aria-hidden="true"></i></summary>
           <div class="faq__a"><p>Yes. Panels generate from daylight, not just direct sun, so they still produce on overcast days. A well-designed system in the Irish midlands typically generates around 850–950 kWh per kWp every year.</p></div>
@@ -740,6 +740,5 @@
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="assets/js/main.js" defer></script>
   <script src="assets/js/flow.js" defer></script>
-<script src="assets/js/preview-notes.js" defer></script>
 </body>
 </html>
