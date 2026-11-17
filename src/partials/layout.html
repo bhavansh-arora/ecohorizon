@@ -116,17 +116,38 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <div class="footer-top">
+    <div class="footer-lead">
+      <div class="footer-call" data-reveal>
+        <p class="label">Talk to a person, not a call centre</p>
+        <a class="footer-call__phone" href="tel:+353578756595"><span>(057) 875 6595</span><i class="footer-call__icon" aria-hidden="true"><svg><use href="#i-arrow"/></svg></i></a>
+        <div class="footer-call__meta">
+          <a href="mailto:info@ecohorizon.ie"><svg aria-hidden="true"><use href="#i-mail"/></svg>info@ecohorizon.ie</a>
+          <a href="https://maps.google.com/?q=Eco+Horizon+Mountrath+R32+WT18" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Derrough, Mountrath, Co. Laois R32 WT18</a>
+        </div>
+      </div>
+      <div class="footer-live" data-footer-live data-reveal style="--d:.15s">
+        <div class="footer-live__head"><small>Mountrath now</small><b data-fl-time>--:--</b></div>
+        <svg class="footer-live__arc" viewBox="0 0 240 92" aria-hidden="true">
+          <path class="footer-live__track" d="M10 86 A110 72 0 0 1 230 86"/>
+          <path class="footer-live__done" d="M10 86 A110 72 0 0 1 230 86" pathLength="1" data-fl-done/>
+          <line class="footer-live__ground" x1="0" y1="86" x2="240" y2="86"/>
+          <circle class="footer-live__sun" r="6" cx="10" cy="86" data-fl-sun/>
+        </svg>
+        <div class="footer-live__foot"><span data-fl-rise>Sunrise --:--</span><span data-fl-state>Calculating</span><span data-fl-set>Sunset --:--</span></div>
+      </div>
+    </div>
+
+    <div class="footer-nav">
       <div class="footer-intro" data-reveal>
         <a class="logo" href="index.html" aria-label="Eco Horizon home">{{> logo}}</a>
-        <p>An Irish solar PV company designing, installing and standing behind world-leading solar technology since 2015.</p>
+        <p>Designing, installing and standing behind solar for Irish homes, businesses and farms since 2015.</p>
         <div class="socials">
           <a href="https://www.facebook.com/ecohorizon.ie/" aria-label="Facebook" rel="noopener" target="_blank"><svg><use href="#i-fb"/></svg></a>
           <a href="https://www.instagram.com/ecohorizon.ie/" aria-label="Instagram" rel="noopener" target="_blank"><svg><use href="#i-ig"/></svg></a>
           <a href="https://www.linkedin.com/company/11246207/" aria-label="LinkedIn" rel="noopener" target="_blank"><svg><use href="#i-in"/></svg></a>
         </div>
       </div>
-      <div data-reveal style="--d:.1s">
+      <nav class="footer-col" aria-label="Solutions" data-reveal style="--d:.08s">
         <h4>Solutions</h4>
         <ul>
           <li><a href="homes.html">Solar for homes</a></li>
@@ -135,35 +156,31 @@
           <li><a href="technology.html#battery">Battery storage</a></li>
           <li><a href="technology.html#ev">EV charging</a></li>
         </ul>
-      </div>
-      <div data-reveal style="--d:.2s">
+      </nav>
+      <nav class="footer-col" aria-label="Grants" data-reveal style="--d:.16s">
+        <h4>Grants</h4>
+        <ul>
+          <li><a href="grants.html#home">SEAI home grant</a></li>
+          <li><a href="grants.html#business">Non-Domestic Microgen</a></li>
+          <li><a href="grants.html#farm">TAMS 3 for farms</a></li>
+          <li><a href="grants.html">Check eligibility</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Company" data-reveal style="--d:.24s">
         <h4>Company</h4>
         <ul>
           <li><a href="about.html">About Eco Horizon</a></li>
           <li><a href="about.html#reviews">Reviews</a></li>
-          <li><a href="grants.html">Grants guide</a></li>
           <li><a href="technology.html">Technology</a></li>
           <li><a href="quote.html">Get a quote</a></li>
         </ul>
-      </div>
-      <div data-reveal style="--d:.3s">
-        <h4>Talk to us</h4>
-        <ul>
-          <li><a href="tel:+353578756595">(057) 875 6595</a></li>
-          <li><a href="mailto:info@ecohorizon.ie">info@ecohorizon.ie</a></li>
-          <li><a href="https://maps.google.com/?q=Eco+Horizon+Mountrath+R32+WT18" target="_blank" rel="noopener">Derrough, Mountrath,<br>Co. Laois R32 WT18</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-horizon" aria-hidden="true"><i class="footer-horizon__sun"></i></div>
-    <div class="footer-word" aria-hidden="true" data-letters>Eco <span>Horizon</span></div>
-    <div class="footer-bottom">
-      <span>© <span data-year>2026</span> Eco Horizon Ltd. All rights reserved.</span>
-      <nav aria-label="Footer">
-        <a href="quote.html">Contact</a>
-        <a href="preview-pack.html">Concept by Code Bunny</a>
-        <a href="#top" data-to-top>Back to top ↑</a>
       </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Eco Horizon Ltd.</span>
+      <a class="footer-bottom__credit" href="preview-pack.html">Concept by Code Bunny</a>
+      <a class="footer-top-btn" href="#top" data-to-top>Back to top <i aria-hidden="true"><svg><use href="#i-arrow"/></svg></i></a>
     </div>
   </div>
 </footer>

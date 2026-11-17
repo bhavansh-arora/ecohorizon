@@ -138,7 +138,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('[data-reveal], [data-split], .sec-head, .footer-horizon, [data-letters]');
+  const revealEls = $$('[data-reveal], [data-split], .sec-head');
   if ('IntersectionObserver' in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
@@ -368,6 +368,48 @@
     });
   };
   if ($('[data-sun-live]')) { updateSun(); setInterval(updateSun, 60000); }
+
+  /* ---------- Footer: Mountrath now (local time and today's sun arc) ---------- */
+  const crossing = (from, rising, dir) => {
+    // Step through time (dir = 1 forward, -1 back) until the sun crosses the horizon
+    const t = new Date(from.getTime());
+    let prev = sunPosition(t, LAT, LON);
+    for (let i = 0; i < 24 * 12; i++) {
+      t.setTime(t.getTime() + dir * 5 * 60000);
+      const cur = sunPosition(t, LAT, LON);
+      const up = dir > 0 ? (prev < -0.833 && cur >= -0.833) : (prev >= -0.833 && cur < -0.833);
+      const down = dir > 0 ? (prev >= -0.833 && cur < -0.833) : (prev < -0.833 && cur >= -0.833);
+      if (rising ? up : down) return new Date(t.getTime());
+      prev = cur;
+    }
+    return null;
+  };
+  const live = $('[data-footer-live]');
+  if (live) {
+    const updateLive = () => {
+      const now = new Date();
+      const elev = sunPosition(now, LAT, LON);
+      const up = elev >= -0.833;
+      $('[data-fl-time]', live).textContent = fmtTime(now);
+      const rise = up ? crossing(now, true, -1) : crossing(now, true, 1);
+      const set = up ? crossing(now, false, 1) : crossing(now, false, -1);
+      $('[data-fl-rise]', live).textContent = rise ? `Sunrise ${fmtTime(rise)}` : 'Sunrise';
+      $('[data-fl-set]', live).textContent = set ? `Sunset ${fmtTime(set)}` : 'Sunset';
+      let p = 0;
+      if (up && rise && set) p = clamp((now - rise) / (set - rise), 0, 1);
+      else if (!up) p = set && rise && rise > now ? 1 : 0;
+      $('[data-fl-state]', live).textContent = up ? `Sun at ${Math.max(0, elev).toFixed(0)}°` : 'After dark';
+      live.classList.toggle('is-night', !up);
+      // Place the sun on the arc by distance along the path, so it sits exactly where the lit line ends
+      const sun = $('[data-fl-sun]', live);
+      const path = $('[data-fl-done]', live);
+      const pt = path.getPointAtLength((up ? p : 0) * path.getTotalLength());
+      sun.setAttribute('cx', pt.x.toFixed(1));
+      sun.setAttribute('cy', pt.y.toFixed(1));
+      live.style.setProperty('--arc', up ? p.toFixed(3) : 0);
+    };
+    updateLive(); setInterval(updateLive, 60000);
+  }
 
   /* ---------- Savings & grant calculator ---------- */
   const microgen = (k) => {
