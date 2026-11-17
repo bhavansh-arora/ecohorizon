@@ -1140,6 +1140,8 @@ select.input option { background: var(--bg-2); }
 .float-badge { position: absolute; left: 20px; bottom: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 20px; background: rgba(var(--bg-rgb), 0.88); border: 1px solid var(--line-2); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: var(--text); }
 .float-badge b { font-family: var(--f-display); font-size: 1.4rem; letter-spacing: -0.03em; }
 .float-badge small { color: var(--muted); font-size: 13px; display: block; }
+/* Pins beside a long list on wide screens only; once the split stacks it would sit on top of the list */
+@media (min-width: 901px) { .split__copy--sticky { position: sticky; top: calc(var(--header-h) + 32px); } }
 @media (max-width: 900px) { .split { grid-template-columns: 1fr; } .split__media { aspect-ratio: 4 / 3.2; } .split--rev .split__media { order: -1; } }
 
 /* Monitoring app mockup (technology page): built in HTML so it stays sharp at any size */
