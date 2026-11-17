@@ -30,7 +30,7 @@
   --paper-line: rgba(15, 36, 27, 0.11);
   --ink: #0f241b;
   --ink-muted: rgba(15, 36, 27, 0.68);
-  --forest: #0c1f17;
+  --forest: #0e2a20;
 
   /* Accent: --sun is the accent for text, icons and borders (deep ember on light, so it passes contrast) */
   --sun: #c2470d;
@@ -47,6 +47,10 @@
   /* Primary button: ink on light, amber on dark */
   --btn-bg: #0f241b; --btn-fg: #ffffff; --btn-hover: #1c3a2c; --btn-icon-bg: #ffb020; --btn-icon-fg: #0f241b;
   --star: #f5a524;
+  /* Sector colours: amber for homes, sky for business, leaf for farms. Used wherever a sector appears. */
+  --c-home: #ffb020; --c-home-light: #ffc85a; --c-home-tint: #fff1d6; --c-home-ink: #8a5200;
+  --c-biz: #3d8bd9;  --c-biz-light: #8cc0f2;  --c-biz-tint: #e4eefa;  --c-biz-ink: #1f5f9e;
+  --c-farm: #3fa66a; --c-farm-light: #8ed39a; --c-farm-tint: #e3f2e7; --c-farm-ink: #1f7a45;
 
   /* Type */
   --f-display: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -74,12 +78,12 @@
    Every component reads these tokens, so anything placed inside picks up the dark look. */
 .theme-dark, .ticker, .hero, .page-hero--media, .section--deep, .sector, .media-card, .mega__card,
 .calc__controls, .flow, .cta, .summary__est, .lead-card {
-  --bg: #0c1f17;
-  --bg-2: #10271d;
-  --bg-3: #153024;
-  --card: #122a20;
-  --card-2: #173327;
-  --bg-rgb: 12, 31, 23;
+  --bg: #0e2a20;
+  --bg-2: #123227;
+  --bg-3: #173a2d;
+  --card: #143428;
+  --card-2: #1a3d30;
+  --bg-rgb: 14, 42, 32;
   --fg-rgb: 244, 242, 236;
   --hi-rgb: 255, 255, 255;
   --shadow-rgb: 0, 0, 0;
@@ -145,10 +149,11 @@ ul, ol { padding: 0; list-style: none; }
 .section--tight { padding-block: calc(var(--section) * 0.6); }
 .section--flush-top { padding-top: 0; }
 /* Two dark sections in a row share one gap, so the rhythm stays even */
-.section:not(.section--paper):not(.section--deep) + .section:not(.section--paper):not(.section--deep):not(.section--tight) { padding-top: 0; }
-.section--paper { background: var(--bg-2); --accent: #dc5009; }  /* a touch deeper so it holds 3:1 on stone */
+.section:not(.section--paper):not(.section--deep):not(.section--sage) + .section:not(.section--paper):not(.section--deep):not(.section--sage):not(.section--tight) { padding-top: 0; }
+.section--paper { background: #f6e8d6; --accent: #c94a06; }  /* apricot; accent deepened to hold 3:1 */
+.section--sage { background: #e3eadb; --accent: #c94a06; }   /* sage band for the process steps */
 .section--deep { background: var(--bg); }
-.section--deep.inset-panel, .section--paper.inset-panel { margin-block: var(--inset); }
+.section--deep.inset-panel, .section--paper.inset-panel, .section--sage.inset-panel { margin-block: var(--inset); }
 .round-top { border-radius: var(--radius) var(--radius) 0 0; }
 .inset-panel {
   margin-inline: clamp(8px, 1vw, 16px);
@@ -189,6 +194,17 @@ ul, ol { padding: 0; list-style: none; }
   .sec-head__note { margin-top: 18px; }
 }
 
+/* Which sector an element belongs to */
+.sector[href="homes.html"], .grant[href$="#home"], .mega__card[href="homes.html"], .starter__opt[data-type="home"], body[data-page="homes"] {
+  --sc: var(--c-home); --sc-light: var(--c-home-light); --sc-tint: var(--c-home-tint); --sc-ink: var(--c-home-ink);
+}
+.sector[href="business.html"], .grant[href$="#business"], .mega__card[href="business.html"], .starter__opt[data-type="business"], body[data-page="business"] {
+  --sc: var(--c-biz); --sc-light: var(--c-biz-light); --sc-tint: var(--c-biz-tint); --sc-ink: var(--c-biz-ink);
+}
+.sector[href="farms.html"], .grant[href$="#farm"], .mega__card[href="farms.html"], .starter__opt[data-type="farm"], body[data-page="farms"] {
+  --sc: var(--c-farm); --sc-light: var(--c-farm-light); --sc-tint: var(--c-farm-tint); --sc-ink: var(--c-farm-ink);
+}
+
 /* --------------------------------------------------------------------------
    Type
    -------------------------------------------------------------------------- */
@@ -214,9 +230,9 @@ ul, ol { padding: 0; list-style: none; }
   font-family: var(--f-mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
   white-space: nowrap;
 }
-.label::before { content: ''; width: 6px; height: 6px; border-radius: 1px; background: var(--flame); flex: none; }
+.label::before { content: ''; width: 6px; height: 6px; border-radius: 1px; background: var(--sc, var(--flame)); flex: none; }
 .theme-dark .label::before, .hero .label::before, .page-hero--media .label::before, .section--deep .label::before,
-.flow .label::before, .cta .label::before, .calc__controls .label::before { background: #ffb020; }
+.flow .label::before, .cta .label::before, .calc__controls .label::before { background: var(--sc-light, #ffb020); }
 .label--plain::before { display: none; }
 
 .prose p + p { margin-top: 1em; }
@@ -278,7 +294,7 @@ ul, ol { padding: 0; list-style: none; }
 .ticker__track { display: flex; gap: 48px; padding-right: 48px; white-space: nowrap; animation: marquee 48s linear infinite; flex: none; }
 .ticker__track span { display: inline-block; }
 .ticker__track span::after { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--dim); margin-left: 48px; vertical-align: middle; }
-.ticker__track b { color: var(--text); font-weight: 500; }
+.ticker__track b { color: #ffb020; font-weight: 500; }
 .ticker:hover .ticker__track { animation-play-state: paused; }
 @keyframes marquee { to { transform: translateX(-100%); } }
 
@@ -343,7 +359,8 @@ ul, ol { padding: 0; list-style: none; }
 .mega__card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(4, 10, 7, 0.92)); }
 .mega__card:hover img { transform: scale(1.06); }
 .mega__card div { position: relative; z-index: 1; }
-.mega__card b { display: block; font-family: var(--f-display); font-size: 1.25rem; letter-spacing: -0.02em; }
+.mega__card b { display: flex; align-items: center; gap: 8px; font-family: var(--f-display); font-weight: 500; font-size: 1.2rem; letter-spacing: -0.02em; }
+.mega__card b::before { content: ''; width: 8px; height: 8px; border-radius: 2px; background: var(--sc); }
 .mega__card small { color: var(--muted); font-size: 12.5px; line-height: 1.4; display: block; margin-top: 4px; }
 .mega__side { padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); }
 .mega__side p { font-size: 14px; color: var(--muted); line-height: 1.5; }
@@ -451,8 +468,8 @@ ul, ol { padding: 0; list-style: none; }
   transition: border-color 0.3s, background-color 0.3s, transform 0.5s var(--ease);
 }
 .starter__opt:hover { border-color: var(--line-2); background: rgba(var(--hi-rgb), 0.06); }
-.starter__opt.is-active { border-color: rgba(var(--sun-rgb), 0.7); background: rgba(var(--sun-rgb), 0.08); }
-.starter__opt svg { width: 22px; height: 22px; color: var(--sun); }
+.starter__opt.is-active { border-color: var(--sc-light); background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px var(--sc-light); }
+.starter__opt svg { width: 22px; height: 22px; color: var(--sc-light, var(--sun)); }
 .starter__opt b { font-family: var(--f-display); font-weight: 500; font-size: 1.05rem; letter-spacing: -0.02em; line-height: 1; }
 .starter__opt small { font-size: 12px; color: var(--muted); line-height: 1.3; }
 .starter .btn { margin-top: 8px; }
@@ -558,7 +575,13 @@ ul, ol { padding: 0; list-style: none; }
 .sector__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
 .sector__num { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--text); white-space: nowrap; line-height: 30px; }
 .sector__title { font-family: var(--f-display); font-weight: 500; font-size: clamp(1.8rem, 2.6vw, 2.6rem); letter-spacing: -0.04em; line-height: 1; }
-.sector__title em { font-style: normal; color: var(--accent); }
+.sector__title em { font-style: normal; color: var(--sc-light, var(--accent)); }
+.sector .chip--sun::before { background: var(--sc-light); }
+.sector::before {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; z-index: 1; background: var(--sc);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.9s var(--ease-out);
+}
+.sector.is-active::before { transform: scaleX(1); }
 .sector__body { display: grid; gap: 18px; }
 .sector__more { display: grid; gap: 18px; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.9s var(--ease), opacity 0.6s; }
 .sector.is-active .sector__more { max-height: 320px; opacity: 1; transition-delay: 0.15s; }
@@ -620,6 +643,10 @@ ul, ol { padding: 0; list-style: none; }
    -------------------------------------------------------------------------- */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-2); }
 .stat { padding: 28px 24px 0 0; display: grid; gap: 10px; align-content: start; }
+.stat::before { content: ''; width: 32px; height: 3px; border-radius: 2px; background: var(--stat-c, var(--c-home)); margin-bottom: 10px; }
+.stat:nth-child(2) { --stat-c: var(--flame); }
+.stat:nth-child(3) { --stat-c: var(--c-biz); }
+.stat:nth-child(4) { --stat-c: var(--c-farm); }
 .stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
 .stat b { font-family: var(--f-display); font-weight: 500; font-size: clamp(2.4rem, 4.2vw, 3.9rem); letter-spacing: -0.045em; line-height: 0.95; font-variant-numeric: tabular-nums; }
 .stat b .unit { font-size: 0.42em; letter-spacing: -0.02em; color: var(--dim); margin-left: 4px; }
@@ -770,6 +797,10 @@ ul, ol { padding: 0; list-style: none; }
 .review footer { display: flex; align-items: center; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
 .review__avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 500; font-size: 13px; color: var(--text); background: var(--bg-2); flex: none; }
 .review footer b { display: block; font-size: 14.5px; font-weight: 500; }
+.review:nth-child(4n+1) .review__avatar { background: var(--c-home-tint); color: var(--c-home-ink); }
+.review:nth-child(4n+2) .review__avatar { background: var(--c-biz-tint); color: var(--c-biz-ink); }
+.review:nth-child(4n+3) .review__avatar { background: var(--c-farm-tint); color: var(--c-farm-ink); }
+.review:nth-child(4n+4) .review__avatar { background: #fde3d3; color: #a23c08; }
 .review footer small { color: var(--dim); font-size: 13px; }
 .review footer .stars { margin-left: auto; font-size: 13px; }
 
@@ -788,7 +819,10 @@ ul, ol { padding: 0; list-style: none; }
   background: var(--card); border: 1px solid var(--line); overflow: hidden; min-height: 360px; isolation: isolate;
   transition: transform 0.6s var(--ease), border-color 0.4s;
 }
-.grant:hover { transform: translateY(-3px); border-color: var(--line-2); }
+.grant:hover { transform: translateY(-3px); border-color: var(--sc, var(--line-2)); }
+.grant[href$="#home"], .grant[href$="#business"], .grant[href$="#farm"] { background: var(--sc-tint); border-color: transparent; }
+.grant .chip--sun::before { background: var(--sc, var(--sun)); }
+.grant__top svg { color: var(--sc-ink, var(--dim)) !important; }
 .grant__top { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
 .grant .grant__amount { color: var(--text); font-family: var(--f-display); font-weight: 500; font-size: clamp(2.8rem, 4.4vw, 4rem); letter-spacing: -0.045em; line-height: 0.85; }
 .grant__amount small { display: block; font-family: var(--f-mono); font-weight: 400; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
@@ -847,13 +881,13 @@ ul, ol { padding: 0; list-style: none; }
   position: relative; isolation: isolate; overflow: hidden; text-align: center;
   padding-top: clamp(104px, 12vw, 176px); padding-bottom: calc(var(--rim) + clamp(72px, 8vw, 120px));
   border-radius: var(--radius); margin-inline: var(--inset);
-  background: #0c1f17; border: 1px solid var(--line);
+  background: var(--bg); border: 1px solid var(--line);
 }
 /* A planet-sized curve whose lit rim is the horizon. Only its top edge shows. */
 .cta__sun {
   position: absolute; left: 50%; top: calc(100% - var(--rim)); z-index: -1;
   width: max(2600px, 240%); aspect-ratio: 1; border-radius: 50%; transform: translateX(-50%);
-  background: radial-gradient(closest-side, #07130d 92%, #0a1a12 100%);
+  background: radial-gradient(closest-side, #0a2018 92%, #0d251c 100%);
   box-shadow:
     0 -1px 0 0 rgba(255, 222, 160, 0.9),
     0 -2px 14px 0 rgba(255, 186, 72, 0.55),
@@ -924,11 +958,29 @@ ul, ol { padding: 0; list-style: none; }
 .footer-top .logo, .socials a { background: none; padding-bottom: 0; }
 .socials a { transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.4s var(--ease-out); }
 .socials a:hover { transform: translateY(-2px); }
-.footer-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--dim); }
+.footer-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: clamp(28px, 3.4vw, 44px); font-size: 13.5px; color: var(--dim); }
 .footer-bottom a:hover { color: var(--text); }
 .footer-bottom nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+/* Sunrise footer: after the dark CTA the page ends in warm light */
+.site-footer {
+  --text: #0f241b; --muted: rgba(15, 36, 27, 0.74); --dim: rgba(15, 36, 27, 0.62);
+  --line: rgba(15, 36, 27, 0.16); --line-2: rgba(15, 36, 27, 0.26); --accent: #fff4dc;
+  margin: 0 var(--inset) var(--inset); border-radius: var(--radius); color: var(--text);
+  background:
+    radial-gradient(80% 60% at 85% 0%, rgba(255, 236, 190, 0.55), transparent 60%),
+    linear-gradient(180deg, #ffb83a 0%, #ff9a1f 55%, #f47c20 100%);
+  padding-bottom: 0;
+}
+.site-footer .logo path[fill^="url"] { fill: currentColor; }
+.site-footer .socials a { border-color: rgba(15, 36, 27, 0.3); }
+.site-footer .socials a:hover { background: var(--ink); color: #ffb020; border-color: var(--ink); }
+.site-footer .footer-horizon__sun { background: #fff6e0; box-shadow: 0 0 0 4px rgba(255, 246, 224, 0.35), 0 0 22px 6px rgba(255, 255, 255, 0.6); }
+/* The wordmark sits on the bottom edge and bleeds off it */
+.site-footer .footer-word { color: var(--ink); margin: 0 0 -0.16em -0.04em; line-height: 0.82; font-size: clamp(3.6rem, 18.3vw, 17rem); }
+@media (max-width: 760px) { .site-footer { margin-bottom: 88px; } .site-footer .footer-word { font-size: 17.2vw; } }
 @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; } .footer-intro { grid-column: 1 / -1; } }
-@media (max-width: 760px) { .site-footer { padding-bottom: 96px; } }
+
 
 /* --------------------------------------------------------------------------
    Forms (quote funnel)
