@@ -386,27 +386,27 @@
   };
   const live = $('[data-footer-live]');
   if (live) {
+    const inHM = (ms) => { const m = Math.max(0, Math.round(ms / 60000)); return m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? ` ${m % 60}m` : ''}` : `${m}m`; };
     const updateLive = () => {
       const now = new Date();
       const elev = sunPosition(now, LAT, LON);
       const up = elev >= -0.833;
       $('[data-fl-time]', live).textContent = fmtTime(now);
-      const rise = up ? crossing(now, true, -1) : crossing(now, true, 1);
-      const set = up ? crossing(now, false, 1) : crossing(now, false, -1);
-      $('[data-fl-rise]', live).textContent = rise ? `Sunrise ${fmtTime(rise)}` : 'Sunrise';
-      $('[data-fl-set]', live).textContent = set ? `Sunset ${fmtTime(set)}` : 'Sunset';
-      let p = 0;
-      if (up && rise && set) p = clamp((now - rise) / (set - rise), 0, 1);
-      else if (!up) p = set && rise && rise > now ? 1 : 0;
-      $('[data-fl-state]', live).textContent = up ? `Sun at ${Math.max(0, elev).toFixed(0)}°` : 'After dark';
+      // Day: the arc is today, sunrise -> sunset. Night: the arc is tonight, sunset -> next sunrise.
+      const start = up ? crossing(now, true, -1) : crossing(now, false, -1);
+      const end = up ? crossing(now, false, 1) : crossing(now, true, 1);
+      const p = start && end ? clamp((now - start) / (end - start), 0, 1) : 0;
+      $('[data-fl-rise]', live).textContent = start ? `${up ? 'Sunrise' : 'Sunset'} ${fmtTime(start)}` : '';
+      $('[data-fl-set]', live).textContent = end ? `${up ? 'Sunset' : 'Sunrise'} ${fmtTime(end)}` : '';
+      $('[data-fl-state]', live).textContent = up
+        ? `Sun at ${Math.max(0, elev).toFixed(0)}°`
+        : (end ? `Sunrise in ${inHM(end - now)}` : 'After dark');
       live.classList.toggle('is-night', !up);
-      // Place the sun on the arc by distance along the path, so it sits exactly where the lit line ends
-      const sun = $('[data-fl-sun]', live);
+      // Place the body by distance along the path, so it sits exactly where the lit line ends
       const path = $('[data-fl-done]', live);
-      const pt = path.getPointAtLength((up ? p : 0) * path.getTotalLength());
-      sun.setAttribute('cx', pt.x.toFixed(1));
-      sun.setAttribute('cy', pt.y.toFixed(1));
-      live.style.setProperty('--arc', up ? p.toFixed(3) : 0);
+      const pt = path.getPointAtLength(p * path.getTotalLength());
+      $('[data-fl-body]', live).style.transform = `translate(${pt.x.toFixed(1)}px, ${pt.y.toFixed(1)}px)`;
+      live.style.setProperty('--arc', p.toFixed(3));
     };
     updateLive(); setInterval(updateLive, 60000);
   }

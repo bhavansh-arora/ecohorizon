@@ -326,8 +326,12 @@
         <svg class="footer-live__arc" viewBox="0 0 240 92" aria-hidden="true">
           <path class="footer-live__track" d="M10 86 A110 72 0 0 1 230 86"/>
           <path class="footer-live__done" d="M10 86 A110 72 0 0 1 230 86" pathLength="1" data-fl-done/>
+          <g class="footer-live__stars"><circle cx="44" cy="20" r="1"/><circle cx="92" cy="6" r="1.2"/><circle cx="150" cy="14" r="0.9"/><circle cx="196" cy="30" r="1.1"/><circle cx="214" cy="8" r="0.8"/><circle cx="20" cy="48" r="0.8"/></g>
           <line class="footer-live__ground" x1="0" y1="86" x2="240" y2="86"/>
-          <circle class="footer-live__sun" r="6" cx="10" cy="86" data-fl-sun/>
+          <g class="footer-live__body" data-fl-body>
+            <circle class="footer-live__sun" r="6"/>
+            <path class="footer-live__moon" d="M2.2 -7.6 A8 8 0 1 0 2.2 7.6 A6 6 0 0 1 2.2 -7.6 Z"/>
+          </g>
         </svg>
         <div class="footer-live__foot"><span data-fl-rise>Sunrise --:--</span><span data-fl-state>Calculating</span><span data-fl-set>Sunset --:--</span></div>
       </div>
